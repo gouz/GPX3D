@@ -1,5 +1,3 @@
 # GPX3D
 
-<p align="center">
-   <img src=" https://github.com/gouz/GPX3D/blob/main/public/icon.webp?raw=true" width="256" height="256" />
-</p>
+![icon](https://github.com/user-attachments/assets/2fc9d598-04ba-46ef-9ae8-cab3c359abb3)
