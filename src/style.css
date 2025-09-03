@@ -36,10 +36,19 @@ body {
 
 html,
 body,
-#map {
-    height: 100%;
+#map,
+#babylon {
+    height: 50vw;
 }
 
-#map {
-    flex-grow: 1;
+#map,
+#babylon {
+    width: 50vw;
+}
+
+#message {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 20px;
 }
