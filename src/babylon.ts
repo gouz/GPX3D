@@ -1,6 +1,6 @@
 import {
+  ArcRotateCamera,
   Engine,
-  FreeCamera,
   HemisphericLight,
   Scene,
   Vector3,
@@ -10,30 +10,23 @@ import type { GPX3DWindow } from "./types";
 export const babylon = () => {
   const canvas = document.getElementById("babylon");
   if ((window as unknown as GPX3DWindow).gpx3D.engine) return;
-  (window as unknown as GPX3DWindow).gpx3D.engine = new Engine(
-    canvas as HTMLCanvasElement,
-    true,
-    {
-      preserveDrawingBuffer: true,
-      stencil: true,
-    },
-  );
-  (window as unknown as GPX3DWindow).gpx3D.scene = new Scene(
-    (window as unknown as GPX3DWindow).gpx3D.engine!,
-  );
-  const camera = new FreeCamera(
-    "cam",
-    new Vector3(0, 2000, 4000),
-    (window as unknown as GPX3DWindow).gpx3D.scene,
+  const engine = new Engine(canvas as HTMLCanvasElement, true, {
+    preserveDrawingBuffer: true,
+    stencil: true,
+  });
+  const scene = new Scene(engine);
+  const camera = new ArcRotateCamera(
+    "camera",
+    -Math.PI / 2,
+    Math.PI / 2.5,
+    3,
+    new Vector3(0, 0, -250),
+    scene,
   );
   camera.setTarget(Vector3.Zero());
   camera.attachControl(canvas, false);
-  new HemisphericLight(
-    "h",
-    new Vector3(0, 1, 0),
-    (window as unknown as GPX3DWindow).gpx3D.scene,
-  );
-  (window as unknown as GPX3DWindow).gpx3D.engine!.runRenderLoop(() =>
-    (window as unknown as GPX3DWindow).gpx3D.scene!.render(),
-  );
+  new HemisphericLight("h", new Vector3(0, 1, 0), scene);
+  engine.runRenderLoop(() => scene.render());
+  (window as unknown as GPX3DWindow).gpx3D.scene = scene;
+  (window as unknown as GPX3DWindow).gpx3D.engine = engine;
 };
