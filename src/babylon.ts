@@ -20,7 +20,7 @@ export const babylon = () => {
     -Math.PI / 2,
     Math.PI / 2.5,
     3,
-    new Vector3(0, 0, -250),
+    new Vector3(0, 0, 0),
     scene,
   );
   camera.setTarget(Vector3.Zero());

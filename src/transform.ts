@@ -17,10 +17,5 @@ export const transform = async () => {
     ne.lat,
   ];
   const { xRange, yRange } = bboxToTileRange(bbox, zoom);
-  await buildTexturedTerrain(
-    (window as unknown as GPX3DWindow).gpx3D.scene!,
-    zoom,
-    xRange,
-    yRange,
-  );
+  await buildTexturedTerrain(zoom, xRange, yRange);
 };

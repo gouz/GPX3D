@@ -1,22 +1,23 @@
 import { transform } from "./transform";
+import type { GPX3DWindow } from "./types";
 
 export const trace = (geoJSON: GeoJSON.FeatureCollection) => {
   const name = "gpx";
-
-  if (window.gpx3D.map.getLayer(name)) {
-    window.gpx3D.map.removeLayer(name);
-    window.gpx3D.map.removeSource(name);
+  const map = (window as unknown as GPX3DWindow).gpx3D.map!;
+  if (map.getLayer(name)) {
+    map.removeLayer(name);
+    map.removeSource(name);
   }
   const { coordinates } = geoJSON.features[0].geometry as {
     coordinates: number[][];
   };
   const lats = coordinates.map((m: number[]) => m[1]);
   const lngs = coordinates.map((m: number[]) => m[0]);
-  window.gpx3D.map.addSource(name, {
+  map.addSource(name, {
     type: "geojson",
     data: geoJSON,
   });
-  window.gpx3D.map.addLayer({
+  map.addLayer({
     id: name,
     type: "line",
     source: name,
@@ -32,12 +33,12 @@ export const trace = (geoJSON: GeoJSON.FeatureCollection) => {
     },
   });
   const padding = 0.01;
-  window.gpx3D.map.fitBounds([
+  map.fitBounds([
     [Math.min(...lngs) - padding, Math.min(...lats) - padding],
     [Math.max(...lngs) + padding, Math.max(...lats) + padding],
   ]);
 
-  setTimeout(async () => {
+  map.on("moveend", async () => {
     await transform();
-  }, 5000);
+  });
 };

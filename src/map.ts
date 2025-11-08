@@ -1,8 +1,9 @@
 import mapboxgl from "mapbox-gl";
 import { getMapboxKey } from "./storage";
+import type { GPX3DWindow } from "./types";
 
 export const createMap = () => {
-  window.gpx3D.map = new mapboxgl.Map({
+  const map = new mapboxgl.Map({
     container: "map",
     zoom: 1,
     center: [0, 0],
@@ -11,15 +12,20 @@ export const createMap = () => {
     accessToken: getMapboxKey(),
   });
 
-  window.gpx3D.map.on("style.load", () => {
-    window.gpx3D.map.addSource("mapbox-dem", {
+  map.on("style.load", () => {
+    map.addSource("mapbox-dem", {
       type: "raster-dem",
       url: "mapbox://mapbox.mapbox-terrain-dem-v1",
       tileSize: 512,
       maxzoom: 14,
     });
-    window.gpx3D.map.setTerrain({ source: "mapbox-dem", exaggeration: 1.5 });
+    map.setTerrain({
+      source: "mapbox-dem",
+      exaggeration: 1.5,
+    });
   });
 
-  window.gpx3D.map.addControl(new mapboxgl.NavigationControl());
+  map.addControl(new mapboxgl.NavigationControl());
+
+  (window as unknown as GPX3DWindow).gpx3D.map = map;
 };

@@ -20,7 +20,7 @@ export const stitchTiles = async (
       const url =
         type === "terrain"
           ? `https://api.mapbox.com/v4/mapbox.terrain-rgb/${z}/${tx}/${ty}.pngraw?access_token=${getMapboxKey()}`
-          : `https://api.mapbox.com/styles/v1/mapbox/outdoors-v12/tiles/256/${z}/${tx}/${ty}?access_token=${getMapboxKey()}`;
+          : `https://api.mapbox.com/styles/v1/mapbox/streets-v12/tiles/256/${z}/${tx}/${ty}?access_token=${getMapboxKey()}`;
 
       const img = new Image();
       img.crossOrigin = "anonymous";

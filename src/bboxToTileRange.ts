@@ -1,8 +1,8 @@
-function lonLatToTile(
+const lonLatToTile = (
   lon: number,
   lat: number,
   z: number,
-): { x: number; y: number } {
+): { x: number; y: number } => {
   const latRad = (lat * Math.PI) / 180;
   const n = 2 ** z;
   const x = Math.floor(((lon + 180) / 360) * n);
@@ -10,7 +10,7 @@ function lonLatToTile(
     ((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2) * n,
   );
   return { x, y };
-}
+};
 
 export const bboxToTileRange = (
   bbox: [number, number, number, number],
